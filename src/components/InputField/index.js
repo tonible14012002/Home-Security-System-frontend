@@ -1,0 +1,12 @@
+import React from 'react';
+
+const InputField = ({ type, field, value, onChange }) => {
+  return (
+    <div className="py-2 px-3 flex flex-col w-[100%] bg-mainCream rounded-md">
+      <p className="text-sm text-mainPurple font-bold ">{field}</p>
+      <input value={value} onChange={onChange} className="input" type={type} />
+    </div>
+  );
+};
+
+export default InputField;

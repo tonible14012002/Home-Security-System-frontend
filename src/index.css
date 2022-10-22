@@ -6,3 +6,12 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
+
+.input {
+  @apply text-lg outline-none bg-transparent
+    h-8  focus:text-mainPurple;
+}
+
+.withHover {
+  @apply hover:opacity-80 cursor-pointer;
+}
