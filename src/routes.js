@@ -1,3 +1,4 @@
+import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
 
@@ -5,6 +6,10 @@ const publicRoutes = [
   {
     path: '',
     component: Home,
+  },
+  {
+    path: '/admin',
+    component: Admin,
   },
   {
     path: 'login',
