@@ -1,3 +1,5 @@
+import Sidebar from "../../components/Sidebar";
+
 const DefaultLayout = ({ children, ...props }) => {
   return (
     <div className="flex">
