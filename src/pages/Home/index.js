@@ -5,9 +5,9 @@ const Home = () => {
 
     return (
         <div>
-            Admin home page
-            <Button/>
-            <Text/>
+           
+            
+                
         </div>
     )
 }

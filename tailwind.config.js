@@ -13,8 +13,6 @@ module.exports = {
       // => @media (min-width: 1280px) { ... }
     },
     extend: {
-<<<<<<< HEAD
-=======
       colors: {
         mainCream: '#F8EDE3',
         mainPurple: '#7D6E83',
@@ -22,7 +20,6 @@ module.exports = {
         mainBlue: '#7895B2',
         mainBrown: '#D0B8A8',
       },
->>>>>>> 8b9182d5e12c5a2d0f836a07e68d6eff1dce1f6e
     },
   },
   plugins: [],
