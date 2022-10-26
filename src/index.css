@@ -13,5 +13,5 @@ body {
 }
 
 .withHover {
-  @apply hover:opacity-80 cursor-pointer;
+  @apply hover:opacity-60 cursor-pointer;
 }
