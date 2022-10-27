@@ -4,7 +4,7 @@ import { UserCircleIcon } from '@heroicons/react/24/outline';
 const Home = () => {
   return (
     <div>
-      <div className="text-black px-10 tablet:px-[30px] desktop:px-[150px] pt-[40px] text-2xl tracking-wide">
+      <div className="text-black text-center tablet:text-left tablet:px-[30px] desktop:px-[150px] pt-[40px] text-2xl tracking-wide">
         Welcome, <span className="font-bold">User!</span>
       </div>
       <div className="flex flex-col items-center justify-center leading-normal">
@@ -13,7 +13,7 @@ const Home = () => {
         </p>
 
         <form>
-          <div className="flex flex-col gap-5 max-w-[350px] tablet:min-w-[500px] mx-auto">
+          <div className="flex flex-col gap-5 min-w-[350px] max-w-[400px] w-[100%] tablet:min-w-[500px] mx-auto">
             <InputField field="Full Name" type="text" />
             <InputField field="Phone No" type="text" />
             <InputField field="Address" type="text" />
