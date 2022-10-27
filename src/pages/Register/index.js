@@ -6,9 +6,9 @@ const Register = () => {
     <form>
       <div className="flex flex-col gap-5 min-w-[470px]">
         <InputField field="Username" type="text" />
+        <InputField field="Email" type="text" />
         <InputField field="Fullname" type="text" />
         <InputField field="Phone No" type="text" />
-        <InputField field="Address" type="text" />
         <InputField field="Password" type="text" />
         <div className="flex items-center gap-5">
           <div className="w-[150px] ">
