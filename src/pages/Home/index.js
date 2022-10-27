@@ -1,6 +1,7 @@
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
+import ModalLayout from '../../layouts/ModalLayout';
 const Home = () => {
   return (
     <div>
@@ -28,6 +29,9 @@ const Home = () => {
           </div>
         </form>
       </div>
+      <ModalLayout>
+        <div className="w-5 h-5 bg-white"></div> {/* Your component*/}
+      </ModalLayout>
     </div>
   );
 };

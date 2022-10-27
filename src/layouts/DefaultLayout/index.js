@@ -16,7 +16,7 @@ const DefaultLayout = ({ children, ...props }) => {
       <div
         className={`${
           openSidebar ? 'translate-x-0' : 'hidden tablet:flex'
-        } tablet:translate-x-0 tablet:relative absolute right-0 z-50 bg-white max-w-[35vw] flex flex-col items-center p-4 h-[100vh] w-[100%] tablet:max-w-[100px] border-r-2`}
+        } tablet:translate-x-0 tablet:relative absolute right-0 z-30 bg-white max-w-[35vw] flex flex-col items-center p-4 h-[100vh] w-[100%] tablet:max-w-[100px] border-r-2`}
       >
         <Sidebar />
         {openSidebar && (
