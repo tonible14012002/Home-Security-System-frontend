@@ -2,6 +2,7 @@ import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import UserManager from './pages/UserManager';
 
 const publicRoutes = [
   {
@@ -22,6 +23,10 @@ const publicRoutes = [
     component: Register,
     auth: true,
   },
+  {
+    path: 'user-management',
+    component: UserManager, 
+  }
 ];
 
 export { publicRoutes };
