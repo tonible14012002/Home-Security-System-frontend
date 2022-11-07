@@ -1,27 +1,41 @@
-import Button from '../../components/Button';
-import InputField from '../../components/InputField';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
-import ModalLayout from '../../layouts/ModalLayout';
-import EditProfile from '../../components/Editprofile';
 import EButton from '../../components/EButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight, faMultiply } from '@fortawesome/free-solid-svg-icons';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import { getOrdinaryUsers } from '../../services/adminService';
+import { useState } from 'react';
+import UserItem from './components/UserItem'
+import UserItemSkeleton from './components/UserItemSkeleton'
+import ReactPaginate from 'react-paginate';
+import UserList from './components/UserList';
 
+const UserManager = ({itemsPerPage = 10}) => {
 
+    const ordinaryUsers = useRef([])
+    const [isLoading, setIsLoading] = useState(false)
 
-const UserManager = () => {
+    useEffect(() => {
+        const getUsers = async () => {
+            setIsLoading(true)
+            const results = await getOrdinaryUsers()
+            ordinaryUsers.current = results
+            setIsLoading(false)
+        }
+        getUsers()
+    }, []);
+
     return (
         <div className='w-full h-full'>
             <h3 className='text-3xl font-semibold mt-10 text-center'>Users Management</h3>
-            <div className='flex flex-col w-[1200px] m-auto mt-10'>
-                <div className='table bg-zinc-300 h-[700px]'></div>
-                <div className='m-5'>
-                    <EButton className='bg-[#9F8772] rounded-full 
-                        w-[45px] h-[45px] hover:bg-[#8d7263] transition-all'>
-                        asdf
-                    </EButton>
-                </div>
-            </div>
+            <UserList 
+                users={ordinaryUsers.current}
+                isLoading={isLoading}
+            />
         </div>
     )
 }
+
+
 
 export default UserManager
