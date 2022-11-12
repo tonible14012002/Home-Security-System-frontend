@@ -1,11 +1,8 @@
 import axios from 'axios';
-import queryString from 'query-string';
 
-const baseUrl = process.env.REACT_APP_API_URL;
-
+const baseURL = process.env.REACT_APP_API_URL;
 const axiosClient = axios.create({
-  baseURL: baseUrl,
-  paramsSerializer: (params) => queryString.stringify({ params }),
+  baseURL,
 });
 
 axiosClient.defaults.withCredentials = true;

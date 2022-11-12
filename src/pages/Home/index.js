@@ -3,6 +3,7 @@ import InputField from '../../components/InputField';
 import { UserCircleIcon } from '@heroicons/react/24/outline';
 import ModalLayout from '../../layouts/ModalLayout';
 import EditProfile from '../../components/Editprofile';
+
 const Home = () => {
   return (
     <div>
@@ -30,9 +31,9 @@ const Home = () => {
           </div>
         </form>
       </div>
-      <ModalLayout>
+      {/* <ModalLayout>
         <EditProfile> </EditProfile>
-      </ModalLayout>
+      </ModalLayout> */}
     </div>
   );
 };

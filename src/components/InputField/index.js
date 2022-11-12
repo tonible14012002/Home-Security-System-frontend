@@ -1,10 +1,18 @@
 import React from 'react';
 
-const InputField = ({ type, field, value, onChange }) => {
+const InputField = ({ type, field, value, onChange, name, register }) => {
   return (
     <div className="py-2 px-3 flex flex-col w-[100%] bg-mainCream rounded-md">
       <p className="text-sm text-mainPurple font-bold ">{field}</p>
-      <input value={value} onChange={onChange} className="input" type={type} />
+      <input
+        {...register(name)}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="input"
+        type={type}
+        required
+      />
     </div>
   );
 };

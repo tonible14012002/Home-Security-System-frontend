@@ -1,12 +1,57 @@
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
+import JwtManager from '../../utils/jwt';
+import userApi from '../../api/userApi';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
 
 const Login = () => {
+  const { setUser } = useAuthContext();
+  // const navigate = useNavigate();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
+
+  const handleLoginSubmit = async (values) => {
+    console.log({ values });
+    try {
+      // const response = await userApi.login(values);
+      // if (response.data) {
+      //   JwtManager.setToken(response.data.tokens.access);
+      //   JwtManager.setRefreshToken(response.data.tokens.refresh);
+      //   setUser(response.data.user);
+      //   navigate('/');
+      // }
+      // toast({
+      //   title: 'Login successfully!',
+      //   description: `Welcome, ${response.data.user.lastName}`,
+      //   status: 'success',
+      //   duration: 4000,
+      //   isClosable: true,
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit((data) => handleLoginSubmit(data))}>
       <div className="flex flex-col gap-5 min-w-[470px]">
-        <InputField field="Username" type="text" />
-        <InputField field="Password" type="password" />
+        <InputField
+          register={register}
+          field="Username"
+          type="text"
+          name="username"
+        />
+        <InputField
+          register={register}
+          field="Password"
+          type="password"
+          name="password"
+        />
         <Button primary text="Login" />
         <a
           className="text-sm font-medium text-mainBrown hover:underline self-end"
