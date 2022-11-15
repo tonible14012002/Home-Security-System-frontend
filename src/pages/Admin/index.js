@@ -2,8 +2,9 @@
 import React from 'react';
 
 const Admin = () => {
+
   return (
-    <div class="flex flex-col gap-20 pt-12 pl-64 pr-80">
+    <div class="flex flex-col gap-20 pt-12 pl-64 pr-80 mb-[100px]">
       <div className="text-black text-2xl tracking-wide">
         Welcome, <span className="font-bold">Admin!</span>
       </div>

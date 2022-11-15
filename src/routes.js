@@ -11,7 +11,7 @@ const publicRoutes = [
     component: Home,
   },
   {
-    path: '/admin',
+    path: 'admin',
     component: Admin,
   },
   {
