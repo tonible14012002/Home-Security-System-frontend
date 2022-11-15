@@ -2,6 +2,7 @@ import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import UserDetails from './pages/UserDetails';
 import UserManager from './pages/UserManager';
 
 const publicRoutes = [
@@ -25,8 +26,12 @@ const publicRoutes = [
   },
   {
     path: 'user-management',
-    component: UserManager, 
-  }
+    component: UserManager,
+  },
+  {
+    path: 'user-details/:id',
+    component: UserDetails,
+  },
 ];
 
 export { publicRoutes };
