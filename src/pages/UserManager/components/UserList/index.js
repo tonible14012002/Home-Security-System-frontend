@@ -22,7 +22,7 @@ const UserList = ({users,itemsPerPage=10, isLoading}) => {
 
     return (
         <div className='flex flex-col laptop:w-[1200px] m-auto mt-10'>
-        <div className='w-full bg-[#EFEFEF] h-[660px]'>
+        <div className='w-full bg-[#EFEFEF] h-[660px] rounded-xl overflow-hidden'>
             <div className='grid grid-cols-[100px_1fr_1fr_200px_200px] w-full'>
                 <div className=' bg-[#D9D9D9] text-xl text-[#316B83] h-[60px] font-semibold leading-[60px] text-center'>ID</div>
                 <div className=' bg-[#D9D9D9] text-xl text-[#316B83] h-[60px] font-semibold leading-[60px] pl-5'>Fullname</div>
@@ -34,7 +34,7 @@ const UserList = ({users,itemsPerPage=10, isLoading}) => {
             :currentItems?.map((item, index) => {
                 return (
                     <UserItem 
-                        id={item.pk}
+                        key={index}
                         fullName={item.first_name + ' ' + item.last_name}
                         address={item.address}
                         phone={item.phone}
