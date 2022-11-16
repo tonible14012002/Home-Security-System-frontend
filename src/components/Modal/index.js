@@ -5,7 +5,7 @@ const Modal = ({children, className, ...props}) => {
 
     useEffect(() => {
         document.body.style.overflow = "hidden"
-        return () => document.body.style.overflow = "scroll"
+        return () => document.body.style.overflow = "hidden"
     }, [])
 
     return ReactDOM.createPortal(

@@ -10,22 +10,9 @@ const UserItem = ({
     fullName, 
     address,
     phone,
+    onDelete,
+    onUpdate
 }) => {
-    const [showDelete, setShowDelete] = useState(false)
-    const [showUpdate, setShowUpdate] = useState(false)
-    
-    const showUpdateModal = () => {
-        setShowUpdate(true)
-    }
-
-    const showDeleteModal = () => {
-        setShowDelete(true)
-    }
-
-    const handleCloseModal = () => {
-        setShowDelete(false)
-        setShowUpdate(false)
-    }
 
     return (
         <div className='grid grid-cols-[100px_1fr_1fr_200px_200px] w-full text-[#9F8772]'>
@@ -35,28 +22,20 @@ const UserItem = ({
             <div className='h-[60px] font-semibold leading-[60px] pl-5'>{phone || '__'}</div>
             <div className='h-[60px] font-semibold leading-[60px] text-center'>
                 <EButton
-                    onClick={showDeleteModal}
+                    onClick={onDelete}
                 >
                     <FontAwesomeIcon 
                         icon={faTrash}
                     />
                 </EButton>
                 <EButton className='ml-6'
-                    onClick={showUpdateModal}
+                    onClick={onUpdate}
                 >
                     <FontAwesomeIcon 
                         icon={faEdit}
                     />
                 </EButton>
             </div>
-            {showDelete &&
-            <UserDeleteModal 
-                onClose={handleCloseModal}
-            />}
-            {showUpdate &&
-            <UserUpdateModal 
-                onClose={handleCloseModal}
-            />}
         </div>
     )
 }

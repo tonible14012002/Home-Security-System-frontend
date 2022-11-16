@@ -3,13 +3,15 @@ import EButton from "../../../../components/EButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext";
 
 const UserDeleteModal = ({onClose:handleClose, userId, ...props}) => {
 
-    const [loading, setLoading] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [countDown, setCountDown] = useState(3)
+    const {dispatchUsers} = useContext(OrdinaryUsersContext)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (deleted){
@@ -26,6 +28,7 @@ const UserDeleteModal = ({onClose:handleClose, userId, ...props}) => {
         const deleteUser = async () => {
             setLoading(true)
             const resp = await new Promise(resolve => {setTimeout(() => {resolve()}, 1000)})
+            dispatchUsers({type: "delete", payload: userId})
             setLoading(false)
             setDeleted(true)
         }

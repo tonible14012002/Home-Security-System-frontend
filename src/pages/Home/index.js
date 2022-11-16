@@ -15,7 +15,7 @@ const Home = () => {
     },
   });
   return (
-    <div>
+    <div className="mb-20">
       <div className="text-black text-center tablet:text-left tablet:px-[30px] desktop:px-64 pt-[40px] text-2xl tracking-wide">
         Welcome, <span className="font-bold">User!</span>
       </div>

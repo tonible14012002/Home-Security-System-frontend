@@ -2,11 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import EButton from "../../../../components/EButton"
 import Modal from "../../../../components/Modal"
 import { faClose } from "@fortawesome/free-solid-svg-icons"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons"
+import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext"
 
 const UserUpdateModal = ({onClose:handleClose}) => {
-    const [loading, setLoading] = useState(false)
+    const {loading, setLoading} = useContext(OrdinaryUsersContext)
     const [updated, setUpdated] = useState(false)
 
     const handleSubmit = (values) => {

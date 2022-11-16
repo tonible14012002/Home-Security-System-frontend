@@ -29,7 +29,6 @@ const EButton = ({
         props.target = "_blank"
         Com = 'a'
     }
-    console.log(Com, to, href)
 
     return (
         <Com
