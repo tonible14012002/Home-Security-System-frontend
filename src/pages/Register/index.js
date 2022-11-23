@@ -1,6 +1,7 @@
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
 
+
 const Register = () => {
   return (
     <form>
@@ -29,3 +30,6 @@ const Register = () => {
 };
 
 export default Register;
+
+
+
