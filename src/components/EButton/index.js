@@ -7,7 +7,6 @@ const EButton = ({
     href, 
     to, 
     disabled, 
-    bg,
     ...passProps
 }) => {
 
@@ -31,15 +30,10 @@ const EButton = ({
         Com = 'a'
     }
 
-    if (disabled) {
-        console.log("disabled button")
-    }
-
     return (
         <Com
             {...props}
-            className={` ${bg && "bg-amber-200 text-zinc-900 dark:text-white dark:bg-purple-500  p-2 pl-4 pr-4 rounded-lg font-semibold "}
-                         ${className}`}
+            className={` ${disabled && "bg-opacity-70"} ${className}`}
         >
             {children}
         </Com>

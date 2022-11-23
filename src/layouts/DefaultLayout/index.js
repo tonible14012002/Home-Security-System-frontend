@@ -5,7 +5,7 @@ import { useState } from 'react';
 const DefaultLayout = ({ children, ...props }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <div className="flex w-[100vw] overflow-x-hidden">
+    <div className="flex h-[100vh] w-[100vw] overflow-hidden">
       <div
         className="absolute right-2 top-2 tablet:hidden "
         onClick={() => setOpenSidebar(true)}
@@ -28,7 +28,7 @@ const DefaultLayout = ({ children, ...props }) => {
           </div>
         )}
       </div>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1 overflow-auto">{children}</div>
     </div>
   );
 };
