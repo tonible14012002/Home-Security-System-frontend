@@ -6,7 +6,7 @@ const OrdinaryUsersContext = createContext([])
 
 const userReducer = (state, action) => {
     switch (action.type) {
-        case "get":
+        case "list":
             return action.payload
         case "update":
             const updatedUser = action.payload
@@ -17,9 +17,7 @@ const userReducer = (state, action) => {
             return state
         case "delete": 
             const toDeleteId = action.payload
-            console.log(toDeleteId)
             const restUsers = state.filter((user) => user.id !== toDeleteId)
-            console.log(restUsers)
             return restUsers
         default:
             return state
@@ -34,7 +32,7 @@ const OrdinaryUserProvider = ({children, ...props}) => {
         const getUsers = async () => {
             setLoading(true)
             const results = await getOrdinaryUsers()
-            dispatchUsers({type: "get", payload: results})
+            dispatchUsers({type: "list", payload: results})
             setLoading(false)
         }
         getUsers()

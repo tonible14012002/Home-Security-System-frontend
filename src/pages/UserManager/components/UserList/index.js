@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext"
 import UserItem from "../UserItem"
+import UserFilter from "../UserFilter"
 import UserItemSkeleton from "../UserItemSkeleton"
 import UserDeleteModal from "../UserDeleteModal"
 import UserUpdateModal from "../UserUpdateModal"
+
 
 const UserList = ({itemsPerPage=10}) => {
 
@@ -40,6 +42,9 @@ const UserList = ({itemsPerPage=10}) => {
 
     return (
         <div className='flex flex-col laptop:w-[1200px] m-auto mt-10'>
+        <div className="flex justify-end gap-4 h-[45px] mb-2">
+            <UserFilter ordinary />
+        </div>
         <div className='w-full bg-[#EFEFEF] h-[660px] rounded-xl overflow-hidden'>
             <div className='grid grid-cols-[100px_1fr_1fr_200px_200px] w-full'>
                 <div className=' bg-[#D9D9D9] text-xl text-[#316B83] h-[60px] font-semibold leading-[60px] text-center'>ID</div>
@@ -53,7 +58,7 @@ const UserList = ({itemsPerPage=10}) => {
                 return (
                     <UserItem 
                         key={index}
-                        id={index+1}
+                        id={user.id}
                         fullName={user.first_name + ' ' + user.last_name}
                         address={user.address}
                         phone={user.phone}
