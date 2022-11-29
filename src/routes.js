@@ -31,7 +31,7 @@ const publicRoutes = [
   {
     path: 'user-details/:id',
     component: UserDetails,
-  },
+  }, 
 ];
 
 export { publicRoutes };

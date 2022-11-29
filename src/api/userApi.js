@@ -10,7 +10,7 @@ const userApi = {
   getUserById: (id) => axiosClient.get(`accounts/ordinary/${id}`),
   deleteUserById: (id) => axiosClient.delete(`accounts/ordinary/${id}`),
   updateUserById: ({ id, ...rest }) =>
-    axiosClient.put(`accounts/ordinary/${id}`, rest),
+    axiosClient.patch(`http://127.0.0.1:8000/accounts/ordinary/${id}`, rest),
 
   //admin management
   getAllAdmins: () => axiosClient.get('accounts/admin'),

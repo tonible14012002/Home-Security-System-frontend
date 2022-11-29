@@ -4,6 +4,7 @@ import { UserCircleIcon } from '@heroicons/react/24/outline';
 import ModalLayout from '../../layouts/ModalLayout';
 import EditProfile from '../../components/Editprofile';
 import { useForm } from 'react-hook-form';
+import userApi from '../../api/userApi'
 
 const Home = () => {
   const { register, handleSubmit } = useForm({
@@ -14,6 +15,13 @@ const Home = () => {
       dateOfBirth: '',
     },
   });
+
+  const submit = async (data) => {
+      const result = await userApi.updateUserById({id:13, ...data})
+      console.log(result)
+  }
+
+
   return (
     <div className="mb-20">
       <div className="text-black text-center tablet:text-left tablet:px-[30px] desktop:px-64 pt-[40px] text-2xl tracking-wide">
@@ -24,17 +32,17 @@ const Home = () => {
           My information
         </p>
 
-        <form>
+        <form onSubmit={handleSubmit(submit)}>
           <div className="flex flex-col gap-5 min-w-[350px] max-w-[400px] w-[100%] tablet:min-w-[500px] mx-auto">
             <InputField
               register={register}
-              name="fullName"
+              name="fullname"
               field="Full Name"
               type="text"
             />
             <InputField
               register={register}
-              name="phoneNo"
+              name="phone"
               field="Phone No"
               type="text"
             />
@@ -46,9 +54,9 @@ const Home = () => {
             />
             <InputField
               register={register}
-              name="dateOfBirth"
+              name="birth"
               field="Date of Birth"
-              type="text"
+              type="date"
             />
             <div class="flex items-center w-full">
               <UserCircleIcon className=" w-20 h-20" />
