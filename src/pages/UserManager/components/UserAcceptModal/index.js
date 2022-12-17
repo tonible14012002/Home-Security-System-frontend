@@ -5,17 +5,17 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext";
-import { deleteOrdinaryUser } from "../../../../services/userServices";
+import { acceptOrdinaryUser } from "../../../../services/userServices";
 
-const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => {
+const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) => {
 
-    const [deleted, setDeleted] = useState(false)
+    const [accepted, setAccepted] = useState(false)
     const [countDown, setCountDown] = useState(3)
-    const {dispatchUsers} = useContext(unConfirm ? UnConfirmOrdUserContext : OrdinaryUsersContext)
+    const {dispatchUsers} = useContext(unConfirm ? UnConfirmOrdUserContext:OrdinaryUsersContext)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (deleted){
+        if (accepted){
             const timerID = setTimeout(handleClose, 3000);
             const countDownID = setInterval(() => {console.log("interval running"); setCountDown(prev=>prev-1)}, 1000)
             return () => {
@@ -23,21 +23,21 @@ const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => 
                 clearInterval(countDownID)
             }
         }
-    }, [deleted, handleClose])
+    }, [accepted, handleClose])
 
-    const handleDeleteUser = () => {
-        const deleteUser = async () => {
+    const handleAcceptUser = () => {
+        const acceptUser = async () => {
             setLoading(true)
-            const result = await deleteOrdinaryUser(userId)
+            const result = await acceptOrdinaryUser(userId)
             dispatchUsers({type: "delete", payload: userId})
             setLoading(false)
-            setDeleted(true)
+            setAccepted(true)
         }
-        deleteUser()
+        acceptUser()
     }
 
     return (
-        <Modal className="flex justify-center items-center">
+        <Modal className="flex justify-center items-center" >
             <div className="relative w-[400px] bg-white rounded-xl">
                 <EButton className="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 bg-white shadow-md w-[30px] h-[30px] rounded-full"
                     onClick={handleClose}
@@ -45,13 +45,13 @@ const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => 
                 >
                     <FontAwesomeIcon icon={faClose} />
                 </EButton>
-                <h3 className="text-xl font-semibold m-auto w-fit mt-4">Are you sure to delete this account ?</h3>
+                <h3 className="text-xl font-semibold m-auto w-fit mt-4">Give this user permission ?</h3>
                 <div className="flex m-5">
                     {loading? 
                     <div className="m-auto p-3">
                         <FontAwesomeIcon className=" animate-spin" icon={faSpinner} />
                     </div>
-                    :deleted?
+                    :accepted?
                     <div className="flex flex-col w-full">
                         <h3 className="text-center w-full">This modal will be automatically close in</h3>
                         <h3 className="text-center text-2xl w-full">{countDown}</h3>
@@ -64,7 +64,7 @@ const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => 
                             No
                         </EButton>
                         <EButton className="w-1/2 p-3 rounded-lg shadow-md font-semibold text-red-400 hover:shadow-lg transition-all "
-                            onClick={handleDeleteUser}
+                            onClick={handleAcceptUser}
                         >
                             Yes
                         </EButton>
@@ -75,4 +75,5 @@ const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => 
     )
 }
 
-export default UserDeleteModal
+
+export default UserAcceptModal

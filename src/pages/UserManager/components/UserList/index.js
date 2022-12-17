@@ -1,22 +1,24 @@
 import { useContext, useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
-import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext"
+import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext"
 import UserItem from "../UserItem"
 import UserFilter from "../UserFilter"
 import UserItemSkeleton from "../UserItemSkeleton"
 import UserDeleteModal from "../UserDeleteModal"
 import UserUpdateModal from "../UserUpdateModal"
+import UserAcceptModal from "../UserAcceptModal"
 
 
-const UserList = ({itemsPerPage=10}) => {
+const UserList = ({itemsPerPage=10, unConfirm}) => {
 
-    const {users, loading} = useContext(OrdinaryUsersContext)
+    const {users, loading} = useContext(unConfirm ? UnConfirmOrdUserContext: OrdinaryUsersContext)
 
     const [pageCount, setPageCount] = useState(0)
     const [itemOffset, setItemOffset] = useState(0)
     const [currentItems, setCurrentItems] = useState(null) 
     const [showDeleteModal, setShowDeleteModal] = useState({show: false, id: null})
     const [showUpdateModal, setShowUpdateModal] = useState({show: false, id: null})
+    const [showAcceptModal, setShowAcceptModal] = useState({show: false, id: null})
 
     const handleDelete = (id) => {
         setShowDeleteModal({show: true, id:id})
@@ -24,9 +26,13 @@ const UserList = ({itemsPerPage=10}) => {
     const handleUpdate = (id) => {
         setShowUpdateModal({show: true, id:id})
     }
+    const handleAccept = (id) => {
+        setShowAcceptModal({show: true, id:id})
+    }
     const handleCloseModal = () => {
         setShowDeleteModal({show: false, id: null})
         setShowUpdateModal({show: false, id:null})
+        setShowAcceptModal({show: false, id: null})
     }
 
     const handlePageClick = (even) => {
@@ -66,6 +72,8 @@ const UserList = ({itemsPerPage=10}) => {
                         className='flex bg-[#e2c7af] transition-all'
                         onDelete={() => handleDelete(user.id)}
                         onUpdate={() => handleUpdate(user.id)}
+                        onAccept={() => handleAccept(user.id)}
+                        showAccept={unConfirm}
                     />
                 )
             })}
@@ -94,11 +102,19 @@ const UserList = ({itemsPerPage=10}) => {
         <UserDeleteModal 
             onClose={handleCloseModal}
             userId={showDeleteModal.id}
+            unConfirm={unConfirm}
         />}
         {showUpdateModal.show &&
         <UserUpdateModal 
             onClose={handleCloseModal}
             userId={showUpdateModal.id}
+            unConfirm={unConfirm}
+        />}
+        {showAcceptModal.show && 
+        <UserAcceptModal 
+            onClose={handleCloseModal}
+            userId={showAcceptModal.id}
+            unConfirm={unConfirm}
         />}
     </div>
     )

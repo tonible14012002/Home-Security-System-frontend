@@ -59,30 +59,33 @@ const Register = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit((data) => handleRegisterSubmit(data))}>
-      <div className="flex flex-col gap-5 min-w-[470px]">
-        <InputField register={register} field="Username" type="text" name="username" />
-        <InputField register={register} field="Email" type="text" name="email"/>
-        <InputField register={register} field="Fullname" type="text" name="full_name" />
-        <InputField register={register} field="Phone No" type="text" name="phone" />
-        <InputField register={register} field="Address" type="text" name="address" />
-        <InputField register={register} field="Password" type="text" name="password" />
-        <div className="flex items-center gap-5">
-          <div className="w-[150px] ">
-            <Button text="Scan face" onClick={handleSelectImage} type="button" />
-            <input ref={imageRef} type='file' hidden onChange={handleOnChangeImage} />
+    <div>
+      <h3 className='text-3xl font-semibold  text-center p-4'>Register</h3>
+      <form onSubmit={handleSubmit((data) => handleRegisterSubmit(data))}>
+        <div className="flex flex-col gap-5 min-w-[470px]">
+          <InputField register={register} field="Username" type="text" name="username" />
+          <InputField register={register} field="Email" type="text" name="email"/>
+          <InputField register={register} field="Fullname" type="text" name="first_name" />
+          <InputField register={register} field="Phone No" type="text" name="phone" />
+          <InputField register={register} field="Address" type="text" name="address" />
+          <InputField register={register} field="Password" type="text" name="password" />
+          <div className="flex items-center gap-5">
+            <div className="w-[150px] ">
+              <Button text="Scan face" onClick={handleSelectImage} type="button" />
+              <input ref={imageRef} type='file' hidden onChange={handleOnChangeImage} />
+            </div>
+            <p className="text-[#A1C298] font-semibold">Scan successfully!</p>
           </div>
-          <p className="text-[#A1C298] font-semibold">Scan successfully!</p>
+          <Button primary text="Register" type="submit"/>
+          <a
+            className="text-sm font-medium text-mainBrown hover:underline self-end"
+            href="/login"
+          >
+            Already have an account? Login here!
+          </a>
         </div>
-        <Button primary text="Register" type="submit"/>
-        <a
-          className="text-sm font-medium text-mainBrown hover:underline self-end"
-          href="/login"
-        >
-          Already have an account? Login here!
-        </a>
-      </div>
-    </form>
+   </form>
+   </div>
   );
 };
 

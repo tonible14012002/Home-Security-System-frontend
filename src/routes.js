@@ -25,7 +25,7 @@ const publicRoutes = [
     auth: true,
   },
   {
-    path: 'user-management',
+    path: 'user-management/:status',
     component: UserManager,
   },
   {
