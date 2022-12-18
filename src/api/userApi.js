@@ -1,9 +1,11 @@
 import axiosClient from './axiosClient';
 const userApi = {
   //auth
-  login: (params) => axiosClient.post('accounts/auth/token', params),
-  register: (params) => axiosClient.post('accounts/ordinary', params),
-  me: () => axiosClient.post('auth/me'),
+  login: (params) => axiosClient.post('accounts/auth/token/', params),
+  register: (params) => axiosClient.post('accounts/ordinary/', params),
+  me: () => axiosClient.post('accounts/auth/token/detail/', {
+      refresh: `${localStorage.getItem('rt-jwt')}`
+  }),
 
   //user management
   getAllUsers: () => axiosClient.get('accounts/ordinary'),

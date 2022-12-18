@@ -1,3 +1,4 @@
+import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
 export const LOGOUT_EVENT = 'jwt-logout';
@@ -41,16 +42,12 @@ const JWTManager = () => {
   const getRefreshToken = async () => {
     if (localStorage.getItem('rt-jwt')) {
       try {
-        const res = await fetch('http://localhost:3001/api/auth/refresh', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('rt-jwt')}`,
-          },
-        }).then((res) => res.json());
+        let formData = new FormData();
+        formData.append('refresh', localStorage.getItem('rt-jwt'));
+        const res = await axios.post("http://127.0.0.1:8000/accounts/auth/token/refresh/", formData) 
 
-        if (res) {
-          setToken(res.access_token);
-          setRefreshToken(res.refresh_token);
+        if (res && res.data) {
+          setToken(res.data.access);
           return true;
         } else return false;
       } catch (error) {

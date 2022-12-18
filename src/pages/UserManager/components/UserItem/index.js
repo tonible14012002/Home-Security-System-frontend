@@ -31,13 +31,15 @@ const UserItem = ({
                         icon={faTrash}
                     />
                 </EButton>
+                {!showAccept && (
                 <EButton className='ml-6'
-                    onClick={onUpdate}
+                onClick={onUpdate}
                 >
                     <FontAwesomeIcon 
                         icon={faEdit}
                     />
                 </EButton>
+                )}
                 {showAccept &&
                 <EButton className='ml-6'>
                     <FontAwesomeIcon 

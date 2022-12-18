@@ -1,9 +1,11 @@
 import Admin from './pages/Admin';
+import CommingSoon from './pages/CommingSoon';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserDetails from './pages/UserDetails';
 import UserManager from './pages/UserManager';
+import WaitingAcception from './pages/WaitingAcception';
 
 const publicRoutes = [
   {
@@ -25,6 +27,19 @@ const publicRoutes = [
     auth: true,
   },
   {
+    path: 'waiting',
+    component: WaitingAcception,
+    auth:true
+  },
+  {
+    path: 'messages',
+    component: CommingSoon,
+  },
+  {
+    path: 'settings',
+    component: CommingSoon,
+  },
+  {
     path: 'user-management/:status',
     component: UserManager,
   },
@@ -32,6 +47,7 @@ const publicRoutes = [
     path: 'user-details/:id',
     component: UserDetails,
   }, 
+  
 ];
 
 export { publicRoutes };

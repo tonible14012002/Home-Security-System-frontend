@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 const UserManager = ({itemsPerPage = 10}) => {
     const { status } = useParams()
-    const showConfirmedUsers = status === 'confirmed'
+    const showConfirmedUsers = status === 'confirm'
 
     return (
         <div className='w-full h-full mb-[100px]'>

@@ -1,43 +1,59 @@
+import moment from "moment";
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
-import ModalLayout from '../../layouts/ModalLayout';
-import EditProfile from '../../components/Editprofile';
-import { useForm } from 'react-hook-form';
-import userApi from '../../api/userApi'
+import { useAuthContext } from '../../context/AuthContext';
 
 const Home = () => {
-  const { register, handleSubmit } = useForm({
+  const {user} = useAuthContext()
+  const { register, handleSubmit , setValue} = useForm({
     defaultValues: {
-      fullName: '',
-      phoneNo: '',
-      address: '',
-      dateOfBirth: '',
+      first_name: user.first_name,
+      last_name: user.last_name,
+      phone: user.phone,
+      address: user.address,
+      birth: moment(user.birth).format('L'),
     },
   });
 
-  const submit = async (data) => {
-      const result = await userApi.updateUserById({id:13, ...data})
-      console.log(result)
+  const handleUpdateInfo = async (data) => {
+      // const result = await userApi.updateUserById({id:13, ...data})
+      console.log(data)
   }
 
+  useEffect(() => {
+    if(user){
+      setValue('first_name', user.first_name)
+      setValue('last_name', user.last_name)
+      setValue('phone', user.phone)
+      setValue('address', user.address)
+      setValue('birth', new Date(user.birth))
+    }
+  }, [user])
 
   return (
     <div className="mb-20">
       <div className="text-black text-center tablet:text-left tablet:px-[30px] desktop:px-64 pt-[40px] text-2xl tracking-wide">
-        Welcome, <span className="font-bold">User!</span>
+        Welcome, <span className="font-bold">{user.last_name}!</span>
       </div>
       <div className="flex flex-col items-center justify-center leading-normal">
         <p className="font-bold text-4xl mb-[50px] mt-[70px] text-center">
           My information
         </p>
 
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmit(handleUpdateInfo)}>
           <div className="flex flex-col gap-5 min-w-[350px] max-w-[400px] w-[100%] tablet:min-w-[500px] mx-auto">
             <InputField
               register={register}
-              name="fullname"
-              field="Full Name"
+              name="first_name"
+              field="First Name"
+              type="text"
+            />
+            <InputField
+              register={register}
+              name="last_name"
+              field="Last Name"
               type="text"
             />
             <InputField
@@ -58,19 +74,12 @@ const Home = () => {
               field="Date of Birth"
               type="date"
             />
-            <div class="flex items-center w-full">
-              <UserCircleIcon className=" w-20 h-20" />
-              <div>
-                <Button text="Change Avatar" />
-              </div>
-            </div>
+            
             <Button primary text="Update" />
           </div>
         </form>
       </div>
-      {/* <ModalLayout>
-        <EditProfile> </EditProfile>
-      </ModalLayout> */}
+      
     </div>
   );
 };

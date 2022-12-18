@@ -45,7 +45,7 @@ const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) =>
                 >
                     <FontAwesomeIcon icon={faClose} />
                 </EButton>
-                <h3 className="text-xl font-semibold m-auto w-fit mt-4">Give this user permission ?</h3>
+                <h3 className="text-xl font-semibold m-auto w-fit mt-4">Accept user's registeration ?</h3>
                 <div className="flex m-5">
                     {loading? 
                     <div className="m-auto p-3">

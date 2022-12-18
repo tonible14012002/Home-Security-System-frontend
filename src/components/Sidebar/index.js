@@ -17,39 +17,45 @@ import {
 } from '@heroicons/react/24/solid';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
 
-const Sidebar = () => {
-  const [admin, setAdmin] = useState(true);
+const Sidebar = ({closeSidebar}) => {
+  const {user, logoutClient} = useAuthContext()
   const [activeLink, setActiveLink] = useState('/');
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname !== activeLink) setActiveLink(location.pathname);
+    if (location.pathname !== activeLink){
+      setActiveLink(location.pathname);
+      closeSidebar()
+    } 
   }, [location]);
 
   return (
     <div className="flex flex-col gap-[30px] p-[10px] text-black w-[70px] items-center  h-[100vh]">
-      <div className="w-14 h-14 my-6 rounded-full bg-blue-400"> </div>
+      <div className="w-[4.5rem] h-[4.5rem] my-6 rounded-full positive border overflow-hidden"> 
+        <img className='absoulte w-[100%] h-[100%] object-fit' alt='' src='https://png.pngtree.com/png-vector/20220630/ourmid/pngtree-home-security-design-concept-png-image_5310483.png' /> 
+      </div>
       <div className="flex flex-col gap-[40px] items-center justify-center">
-        <Link to="/">
-          {activeLink === '/' ? (
+        <Link to={user.is_superuser ? '/admin' : '/'}>
+          {activeLink === '/' || activeLink === '/admin' ? (
             <HomeIconS className="w-10 h-10 withHover" />
           ) : (
             <HomeIcon className="w-10 h-10 withHover" />
           )}
         </Link>
 
-        {admin && (
+        {user.is_superuser && (
           <>
-            <Link to="/user-management">
-              {activeLink === '/user-management' ? (
+            <Link to="/user-management/confirm">
+              {activeLink === '/user-management/confirm' ? (
                 <ChartBarSquareIconS className="w-10 h-10 withHover" />
               ) : (
                 <ChartBarSquareIcon className="w-10 h-10 withHover" />
               )}
             </Link>
-            <Link to="/user-registeration">
-              {activeLink === '/user-registeration' ? (
+            <Link to="/user-management/unconfirm">
+              {activeLink === '/user-management/unconfirm' ? (
                 <ClipboardDocumentIconS className="w-10 h-10 withHover" />
               ) : (
                 <ClipboardDocumentIcon className="w-10 h-10 withHover" />
@@ -71,7 +77,7 @@ const Sidebar = () => {
             <Cog6ToothIcon className="w-10 h-10 withHover" />
           )}
         </Link>
-        <ArrowLeftOnRectangleIcon className="w-10 h-10 withHover text-mainRed" />
+        <ArrowLeftOnRectangleIcon onClick={logoutClient} className="w-10 h-10 withHover text-mainRed" />
       </div>
     </div>
   );
