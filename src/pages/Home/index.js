@@ -1,25 +1,30 @@
 import moment from "moment";
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import userApi from "../../api/userApi";
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
 import { useAuthContext } from '../../context/AuthContext';
 
 const Home = () => {
-  const {user} = useAuthContext()
+  const {user, setUser} = useAuthContext()
   const { register, handleSubmit , setValue} = useForm({
     defaultValues: {
       first_name: user.first_name,
       last_name: user.last_name,
       phone: user.phone,
       address: user.address,
-      birth: moment(user.birth).format('L'),
+      birth: user.birth,
     },
   });
 
-  const handleUpdateInfo = async (data) => {
-      // const result = await userApi.updateUserById({id:13, ...data})
-      console.log(data)
+  const handleUpdateInfo = async (values) => {
+    try {
+      const res = await userApi.updateUserById({id: user.id,...values })
+      if(res && res.data) setUser(res.data)
+    } catch (error) {
+      alert(JSON.stringify(error.data))
+    }
   }
 
   useEffect(() => {
@@ -28,7 +33,7 @@ const Home = () => {
       setValue('last_name', user.last_name)
       setValue('phone', user.phone)
       setValue('address', user.address)
-      setValue('birth', new Date(user.birth))
+      setValue('birth', user.birth)
     }
   }, [user])
 

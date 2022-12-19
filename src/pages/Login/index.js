@@ -29,7 +29,7 @@ const Login = () => {
           JwtManager.setToken(response.data.access);
           JwtManager.setRefreshToken(response.data.refresh);
           setUser(response.data.user);
-          if(user.is_superuser) navigate("/admin")
+          if(user.is_staff) navigate("/admin")
           else navigate('/');
         }
       }

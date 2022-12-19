@@ -52,7 +52,7 @@ const Register = () => {
   };
 
   useEffect(() => {
-    if(user.first_name) navigate("/")
+    if(user.first_name ) navigate("/")
   }, [user])
 
   return (

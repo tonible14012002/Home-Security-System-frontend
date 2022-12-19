@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
 import { useAuthContext } from './context/AuthContext';
 import AuthLayout from './layouts/AuthLayout';
@@ -10,11 +10,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const {checkAuth } = useAuthContext();
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const authenticate = async () => {
       const isAuth = await checkAuth()
-      if(!isAuth) navigate("/login")
+      if(!isAuth) {
+        if(location.pathname === "/login") navigate("/login")
+        else navigate("/register")
+      }
       setLoading(false);
     };
     authenticate();

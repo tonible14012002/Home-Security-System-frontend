@@ -39,6 +39,7 @@ const userReducer = (state, action) => {
 const OrdinaryUserProvider = ({children, ...props}) => {
     const [loading, setLoading] = useState(false)
     const [users, dispatchUsers] = useReducer(userReducer, [])
+    const [refetch, setRefetch] = useState({})
 
     useEffect(() => {
         const getUsers = async () => {
@@ -48,10 +49,10 @@ const OrdinaryUserProvider = ({children, ...props}) => {
             setLoading(false)
         }
         getUsers()
-    }, [])
+    }, [refetch])
     
     return (
-        <OrdinaryUsersContext.Provider value={{users, dispatchUsers, loading, setLoading}}>
+        <OrdinaryUsersContext.Provider value={{users, dispatchUsers, loading, setLoading, setRefetch}}>
             {children}
         </OrdinaryUsersContext.Provider>
     )

@@ -7,6 +7,7 @@ const EButton = ({
     href, 
     to, 
     disabled, 
+    type,
     ...passProps
 }) => {
 
@@ -34,6 +35,7 @@ const EButton = ({
         <Com
             {...props}
             className={` ${disabled && "bg-opacity-70"} ${className}`}
+            type={type}
         >
             {children}
         </Com>
