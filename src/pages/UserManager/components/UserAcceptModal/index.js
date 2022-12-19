@@ -7,11 +7,13 @@ import { useContext, useEffect, useState } from "react";
 import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext";
 import { acceptOrdinaryUser } from "../../../../services/userServices";
 
-const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) => {
+const UserAcceptModal = ({onClose: handleClose, userId, ...props}) => {
 
     const [accepted, setAccepted] = useState(false)
     const [countDown, setCountDown] = useState(3)
-    const {dispatchUsers} = useContext(unConfirm ? UnConfirmOrdUserContext:OrdinaryUsersContext)
+    const {dispatchUsers} = useContext(UnConfirmOrdUserContext)
+    const { setRefetch } = useContext(OrdinaryUsersContext)
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -30,6 +32,7 @@ const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) =>
             setLoading(true)
             const result = await acceptOrdinaryUser(userId)
             dispatchUsers({type: "delete", payload: userId})
+            setRefetch({})
             setLoading(false)
             setAccepted(true)
         }
