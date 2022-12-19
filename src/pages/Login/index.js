@@ -23,7 +23,8 @@ const Login = () => {
       const response = await userApi.login(values);
       if (response.data) {
         const user = response.data.user 
-        if(!user.is_accepted && !user.is_superuser) alert("User registeration hasn't been confirmed by admin!. Please come back later!")
+        console.log({user})
+        if(!user.is_accepted && !user.is_staff) alert("User registeration hasn't been confirmed by admin!. Please come back later!")
         else{
           JwtManager.setToken(response.data.access);
           JwtManager.setRefreshToken(response.data.refresh);

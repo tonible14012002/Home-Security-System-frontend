@@ -37,7 +37,7 @@ const Sidebar = ({closeSidebar}) => {
         <img className='absoulte w-[100%] h-[100%] object-fit' alt='' src='https://png.pngtree.com/png-vector/20220630/ourmid/pngtree-home-security-design-concept-png-image_5310483.png' /> 
       </div>
       <div className="flex flex-col gap-[40px] items-center justify-center">
-        <Link to={user.is_superuser ? '/admin' : '/'}>
+        <Link to={user.is_staff ? '/admin' : '/'}>
           {activeLink === '/' || activeLink === '/admin' ? (
             <HomeIconS className="w-10 h-10 withHover" />
           ) : (
@@ -45,7 +45,7 @@ const Sidebar = ({closeSidebar}) => {
           )}
         </Link>
 
-        {user.is_superuser && (
+        {user.is_staff && (
           <>
             <Link to="/user-management/confirm">
               {activeLink === '/user-management/confirm' ? (
