@@ -12,10 +12,10 @@ const Admin = () => {
           <p className="font-bold text-7xl  mt-5 text-center">12</p>
         </div>
         <div className="relative w-[100%] h-72  rounded-lg col-span-6">
-          <img
-            className="absolute w-[100%] h-[100%] object-fill"
-            src="http://10.128.101.165:5000/video_feed"
-          />
+        <img src='http://127.0.0.1:5000/video_feed' 
+          alt='video'
+          className="absolute w-[100%] h-[100%] object-fill"
+        />
         </div>
         <div class="bg-mainCream text-black w-[100%] h-80 pt-10 pl-12 rounded-lg col-span-11">
           <p className="font-bold text-4xl text-left">
