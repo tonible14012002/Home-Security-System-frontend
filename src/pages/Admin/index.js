@@ -1,141 +1,129 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import userApi from '../../api/userApi';
+import ReactPaginate from 'react-paginate';
 
-const Admin = () => {
+const Admin = ({itemsPerPage=6}) => {
+
+  const { user } = useContext(AuthContext)
+  const [count, setCount] = useState(0)
+  
+  const [pageCount, setPageCount] = useState(0)
+  const [itemOffset, setItemOffset] = useState(0)
+  const [currentItems, setCurrentItems] = useState(null) 
+  const [visits, setVisits] = useState([])
+  
+  const fullName = (user.first_name + ' ' + user.last_name).trim()
+
+  const handlePageClick = (even) => {
+    const newOffset = even.selected * itemsPerPage % visits.length
+    setItemOffset(newOffset)
+  }
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage
+    setCurrentItems(visits.slice(itemOffset, endOffset))
+    setPageCount(Math.ceil(visits.length / itemsPerPage))
+  }, [visits, itemOffset, itemsPerPage])
+
+  useEffect(() => {
+    const getVisits = async () => {
+      try {
+        const { data: userVisits } = await userApi.getAllVisits()
+        setVisits(userVisits)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    getVisits()
+  }, [])
+
+  useEffect(() => {
+    const countUser = async () => {
+      try {
+        const { data: {count} } = await userApi.countUser()
+        setCount(count)
+      }
+      catch (e) { console.log(e) }
+    }
+    countUser()
+  }, [])
+
   return (
-    <div class="flex flex-col gap-20 pt-12 pl-64 pr-80 mb-[100px]">
-      <div className="text-black text-2xl tracking-wide">
-        Welcome, <span className="font-bold">Admin!</span>
-      </div>
-      <div className="grid grid-cols-11 gap-x-5 gap-y-8">
-        <div className="flex flex-col w-[100%] h-72 bg-mainCream rounded-lg col-span-5">
-          <p className="font-bold text-4xl mt-16 text-center">My Users</p>
-          <p className="font-bold text-7xl  mt-5 text-center">12</p>
+    <div className="px-[200px] py-10 mb-[100px]">
+      <h3 className="text-black text-2xl">
+        Welcome, <span className="font-bold">{fullName || user.username}</span>
+      </h3>
+      <div className="mt-16">
+        <div className="grid h-72 gird grid-cols-2 mb-10 gap-10">
+          <div className="flex flex-col h-full bg-mainCream rounded-lg justify-center">
+            <p className="font-bold text-4xl text-center">My Users</p>
+            <p className="font-bold text-7xl mt-4 text-center">{count}</p>
+          </div>
+          <div className="w-full h-full rounded-lg overflow-hidden">
+            <img
+              className=' object-cover h-full w-full'
+              alt='Camera'
+              src='http://127.0.0.1:5000/video_feed'
+            />
+          </div>
         </div>
-        <div className="relative w-[100%] h-72  rounded-lg col-span-6">
-        <img src='http://127.0.0.1:5000/video_feed' 
-          alt='video'
-          className="absolute w-[100%] h-[100%] object-fill"
-        />
+        <div className="bg-mainCream text-black px-10 py-5 rounded-xl w-full mb-6">
+          <h3 className='text-2xl font-semibold mb-5'>Recent Activities</h3>
+          <div className='px-10 flex flex-col text-mainPurple min-h-[200px]'> 
+            {currentItems?.map((item, index) => {
+              const uFullName = (item.user.first_name + ' ' + item.user.last_name).trim()
+              console.log(item)
+              return (
+                <VisitItem 
+                  id={index}
+                  key={index}
+                  timestamp={item.time}
+                  fullName={uFullName || item.user.username}
+                  uid={item.user.id}
+                />
+              )
+            })}
+          </div>
         </div>
-        <div class="bg-mainCream text-black w-[100%] h-80 pt-10 pl-12 rounded-lg col-span-11">
-          <p className="font-bold text-4xl text-left">
-            Recent Users Activities
-          </p>
-          <table class="table-auto mt-8">
-            <thead>
-              <tr>
-                <th class="w-20"></th>
-                <th class="w-44"></th>
-                <th class="w-48"></th>
-                <th class="w-fit"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="py-2.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="Green"
-                    class="w-8 h-8"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                    />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-black text-xl tracking-wide">
-                    Kevin Hart
-                  </div>
-                </td>
-                <td>
-                  <div className="text-mainGreen font-bold text-xl tracking-wide">
-                    Joined
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="Green"
-                    class="w-8 h-8"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                    />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-black text-xl tracking-wide">
-                    Justin Beiber
-                  </div>
-                </td>
-                <td>
-                  <div className="text-mainGreen font-bold text-xl tracking-wide">
-                    Joined
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2.5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="red"
-                    class="w-8 h-8"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                    />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-black text-xl tracking-wide">
-                    Will Smith
-                  </div>
-                </td>
-                <td>
-                  <div className="text-mainRed font-bold text-xl tracking-wide">
-                    Leaved
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ReactPaginate 
+            nextLabel="next"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={pageCount}
+            previousLabel="previous"
+            pageClassName="rounded-md"
+            pageLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-[40px] h-[40px] block flex justify-center items-center"
+            previousLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
+            nextLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
+            breakLabel="..."
+            breakClassName="page-item"
+            breakLinkClassName="page-link"
+            containerClassName="flex justify-between w-fit ml-auto gap-5 font-semibold"
+            activeClassName="outline outline-2"
+            renderOnZeroPageCount={null}
+          />
       </div>
     </div>
   );
 };
 
 export default Admin;
+
+
+const VisitItem = ({id, timestamp, fullName, uid, ...props}) => {
+  const weekDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  const time = new Date(timestamp)
+  return (
+    <div className="flex h-[30px] font-semibold">
+      <div className="mr-20 font-semibold">{id}</div>
+      <div className="w-full text-lg mr-24">{weekDay[time.getDay()]} {time.toLocaleString("en-US")}</div>
+      <div className="mr-20 text-lg font-semibold">{uid}</div>
+      <div className="w-full text-lg">{fullName}</div>
+    </div>
+  )
+}

@@ -1,129 +1,125 @@
 import React from 'react';
-import Button from '../../components/Button';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import UserUpdateForm from '../components/UserUpdateForm';
+import userApi from '../../api/userApi';
+import { useState } from 'react';
+import ReactPaginate from 'react-paginate';
 
 const UserDetails = () => {
+  const {id} = useParams()
+  const [user, setUser] = useState() 
+  const [visits, setVisits] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const getUserDetail = async () => {
+      try{
+        const {data: uInfo} = await userApi.getUserById(id)
+        setUser(uInfo)
+        const { visits: userVisits } = uInfo
+        setVisits(userVisits)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+    getUserDetail()
+  }, [id])
+
   return (
-    <div class="flex flex-col gap-20 pt-12 ml-16 mr-16">
-      <div className="grid grid-cols-11 gap-x-5">
-        <div className="rounded-lg col-span-5">
-        <form>
-           <div className="flex flex-col gap-1 min-w-[470px]">
-              <div className="flex flex-col w-[100%] h-20 mb-4 mt-32 rounded-lg">
-                <p className="font-bold text-4xl text-center">
-                  User Details     
-                </p>
-              </div>
-              <label className="text-sm text-mainPurple font-bold">
-                 Full name
-              </label>
-              <div className="flex flex-col w-[100%] h-16 mb-4 bg-mainCream rounded-lg">
-                <p className="font-bold text-sm mt-3 text-left p-2.5 text-[#D7C0AE]">
-                  Kevin Hart    
-                </p>
-              </div>
-              <label className="text-sm text-mainPurple font-bold">
-                 Phone No
-              </label>
-              <div className="flex flex-col w-[100%] h-16 mb-4 bg-mainCream rounded-lg">
-                <p className="font-bold text-sm mt-3 text-left p-2.5 text-[#D7C0AE]">
-                  1234567890    
-                </p>
-              </div>
-              <label className="text-sm text-mainPurple font-bold">
-                 Email
-              </label>
-              <div className="flex flex-col w-[100%] h-16 mb-4 bg-mainCream rounded-lg">
-                <p className="font-bold text-sm mt-3 text-left p-2.5 text-[#D7C0AE]">
-                  123@gmail.com    
-                </p>
-              </div>
-              <label className="text-sm text-mainPurple font-bold">
-                 Date of birth
-              </label>
-              <div className="flex flex-col w-[100%] h-16 mb-4 bg-mainCream rounded-lg">
-                <p className="font-bold text-sm mt-3 text-left p-2.5 text-[#D7C0AE]">
-                  01/01/2002    
-                </p>
-              </div>
-              
-           <div className="w-64 mb-4">
-            <Button text="Face dectection image" />
-           </div>
-        <Button primary text="Update" />
-      </div>
-    </form>
-        </div>
-        <div class="bg-mainCream text-black w-[100%] h-80 pt-10 mt-96 pl-12 rounded-lg col-span-6">
-          <p className="font-bold text-4xl text-left">
-            Recent Users Activities     
-          </p>
-          <table class="table-auto mt-8">
-            <thead>
-              <tr>
-                <th class="w-20"></th>
-                <th class="w-48"></th>
-                <th class="w-fit"></th>
-              </tr>
-            </thead>
-  
-            <tbody>
-              <tr>
-                <td class="py-2.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="Green" class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-mainGreen font-bold text-xl tracking-wide">
-                    Joined
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="Green" class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-mainGreen font-bold text-xl tracking-wide">
-                    Joined
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td class="py-2.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-8 h-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                  </svg>
-                </td>
-                <td>
-                  <div className="text-mainRed font-bold text-xl tracking-wide">
-                    Leaved
-                  </div>
-                </td>
-                <td>
-                  <div className="text-[#ADA6A6] text-xl tracking-wide">
-                    Thur, Match 22nd 04:55pm
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className='mt-14 px-10 grid grid-cols-[500px_1fr]'>
+      {user &&
+      <UserUpdateForm 
+        className="px-4 max-w-[500px]"
+        title="User Detail"
+        id={id}
+        defaultValues={user}
+      />}
+
+      <ActivityHistory 
+        visits={visits}
+      />
     </div>
   );
 };
 
 export default UserDetails;
+
+
+const ActivityHistory = ({
+  className,
+  visits=[],
+  itemsPerPage=10,
+  ...props
+}) => {
+  const [pageCount, setPageCount] = useState(0)
+  const [itemOffset, setItemOffset] = useState(0)
+  const [currentItems, setCurrentItems] = useState(null) 
+
+  const handlePageClick = (even) => {
+      const newOffset = even.selected * itemsPerPage % visits.length
+      setItemOffset(newOffset)
+  }
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage
+    setCurrentItems(visits.slice(itemOffset, endOffset))
+    setPageCount(Math.ceil(visits.length / itemsPerPage))
+  }, [visits, itemOffset, itemsPerPage])
+
+  return (
+    <div className={`mx-14 ${className}`}>
+      <div className='float-right'>
+        <h3 className='font-semibold text-2xl text-center mb-9'>Visit History</h3>
+        <div className='flex flex-col gap-5'>
+          <div className='min-h-[400px] max-h-[400px] flex flex-col justify-between bg-mainCream rounded-2xl px-10 py-8'>
+            {currentItems?.map((item, index) => {
+              return (
+                <Visit 
+                  id={index}
+                  timestamp={item.time}
+                  key={index}
+                />
+              )
+            })}
+          </div>
+          <div>
+            <ReactPaginate 
+              nextLabel="next"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={2}
+              pageCount={pageCount}
+              previousLabel="previous"
+              pageClassName="rounded-md"
+              pageLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-[40px] h-[40px] block flex justify-center items-center"
+              previousLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
+              nextLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="flex justify-between w-fit ml-auto gap-5 font-semibold"
+              activeClassName="outline outline-2"
+              renderOnZeroPageCount={null}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Visit = ({timestamp, id, ...props}) => {
+  const time = new Date(timestamp)
+  const weekDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  return (
+    <div className='h-[40px] text-mainPurple text-xl flex justify-between items-center'>
+      <div className=''>
+        {id}
+      </div>
+      <div className=''>
+        {weekDay[time.getDay()]} {time.toLocaleString("en-Us")}
+      </div>
+    </div>
+  )
+}
