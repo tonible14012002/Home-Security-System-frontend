@@ -101,12 +101,6 @@ const VisitList = ({itemsPerPage=6}) => {
             activeClassName="outline outline-2"
             renderOnZeroPageCount={null}
           /> 
-          <EButton
-            className="px-4 py-2 bg-blue-400 rounded text-white shadow-md transition hover:bg-blue-500"
-            onClick={() => {session.send('sadasdas')}}
-          >
-            send
-          </EButton>
         </>
     )
 }
