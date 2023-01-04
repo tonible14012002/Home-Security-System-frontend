@@ -11,16 +11,13 @@ const SocketProvider = ({children, ...props}) => {
     // trigger create socket connection if logged in
     const { user } = useAuthContext()
     const url = `${baseSocketURL}ws/event/`
-    const eventHandler = useRef({
-        NEW_VISIT: []
-    })
 
     const onOpen = useCallback(() => {
         console.log('opened connection')
     }, [])
 
     const onMessage = useCallback((e) => {
-        eventHandler()
+
     }, [])
 
     const onClose = useCallback(() => {

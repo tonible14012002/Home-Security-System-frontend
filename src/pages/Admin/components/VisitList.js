@@ -38,11 +38,17 @@ const VisitList = ({itemsPerPage=6}) => {
     }
 
     const handleNotification = useCallback((e) => {
+      const newVisit = JSON.parse(e.data)
+      newVisit.isRecent = true
+      const user = newVisit.user
+      const name = (user.first_name || '' + user.last_name || '').trim() || user.username
+
+      // append visit to list
       setVisits((oldVisits) => {
-        const newVisit = { isRecent: true, ...oldVisits[0]}
         return [newVisit, ...oldVisits]
       })
-      toast.success(e.data)
+
+      toast.success(`Recognised ${name}`)
     }, [])
 
     const addWebSocketEvent = () => {
