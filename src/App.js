@@ -5,6 +5,9 @@ import { useAuthContext } from './context/AuthContext';
 import AuthLayout from './layouts/AuthLayout';
 import DefaultLayout from './layouts/DefaultLayout';
 import { publicRoutes } from './routes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+import { useSocketContext } from './context/SocketContext';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -27,6 +30,7 @@ function App() {
   if (loading) return <LoadingSpinner />;
   return (
     <div className="App">
+        <ToastContainer />
         <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component;

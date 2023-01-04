@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const baseSocketURL = "ws://127.0.0.1:8000/";
 const baseURL = "http://127.0.0.1:8000/";
 const axiosClient = axios.create({
   baseURL,
@@ -21,3 +22,4 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
+export { baseURL, baseSocketURL }

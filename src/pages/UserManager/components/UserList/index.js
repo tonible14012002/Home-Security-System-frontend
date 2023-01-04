@@ -12,7 +12,6 @@ import UserAcceptModal from "../UserAcceptModal"
 const UserList = ({itemsPerPage=10, unConfirm}) => {
 
     const {users, loading} = useContext(unConfirm ? UnConfirmOrdUserContext: OrdinaryUsersContext)
-
     const [pageCount, setPageCount] = useState(0)
     const [itemOffset, setItemOffset] = useState(0)
     const [currentItems, setCurrentItems] = useState(null) 
