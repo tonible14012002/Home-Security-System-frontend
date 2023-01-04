@@ -8,7 +8,7 @@ const userApi = {
   }),
 
   //user management
-  getAllUsers: () => axiosClient.get('accounts/ordinary'),
+  getAllUsers: () => axiosClient.get('accounts/ordinary/'),
   getUserById: (id) => axiosClient.get(`accounts/ordinary/${id}/`),
   deleteUserById: (id) => axiosClient.delete(`accounts/ordinary/${id}`),
   updateUserById: ({ id, ...rest }) =>

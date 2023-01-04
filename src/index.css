@@ -16,3 +16,7 @@ body {
 .withHover {
   @apply hover:opacity-60 cursor-pointer;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

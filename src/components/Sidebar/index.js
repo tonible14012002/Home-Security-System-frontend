@@ -64,7 +64,7 @@ const Sidebar = ({closeSidebar}) => {
           </>
         )}
         <Link to="/messages">
-          {activeLink === '/messages' ? (
+          {activeLink.includes('/messages')  ? (
             <ChatBubbleBottomCenterIconS className="w-10 h-10 withHover" />
           ) : (
             <ChatBubbleBottomCenterIcon className="w-10 h-10 withHover" />

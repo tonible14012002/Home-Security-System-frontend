@@ -26,8 +26,8 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
     const handleUpdate = (id) => {
         setShowUpdateModal({show: true, id:id})
     }
-    const handleAccept = (id) => {
-        setShowAcceptModal({show: true, id:id})
+    const handleAccept = (user) => {
+        setShowAcceptModal({show: true, user:user})
     }
     const handleCloseModal = () => {
         setShowDeleteModal({show: false, id: null})
@@ -72,7 +72,7 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
                         className='flex bg-[#e2c7af] transition-all'
                         onDelete={() => handleDelete(user.id)}
                         onUpdate={() => handleUpdate(user.id)}
-                        onAccept={() => handleAccept(user.id)}
+                        onAccept={() => handleAccept(user)}
                         showAccept={unConfirm}
                     />
                 )
@@ -113,7 +113,7 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
         {showAcceptModal.show && 
         <UserAcceptModal 
             onClose={handleCloseModal}
-            userId={showAcceptModal.id}
+            selectUser={showAcceptModal.user}
             unConfirm={unConfirm}
         />}
     </div>

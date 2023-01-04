@@ -6,13 +6,17 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext";
 import { acceptOrdinaryUser } from "../../../../services/userServices";
+import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../firebase";
+import { useAuthContext } from "../../../../context/AuthContext";
 
-const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) => {
-
+const UserAcceptModal = ({onClose: handleClose, selectUser, unConfirm, ...props}) => {
+    const {user} = useAuthContext()
     const [accepted, setAccepted] = useState(false)
     const [countDown, setCountDown] = useState(3)
     const {dispatchUsers} = useContext(unConfirm ? UnConfirmOrdUserContext:OrdinaryUsersContext)
     const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         if (accepted){
@@ -25,15 +29,24 @@ const UserAcceptModal = ({onClose: handleClose, userId, unConfirm, ...props}) =>
         }
     }, [accepted, handleClose])
 
-    const handleAcceptUser = () => {
-        const acceptUser = async () => {
-            setLoading(true)
-            const result = await acceptOrdinaryUser(userId)
-            dispatchUsers({type: "delete", payload: userId})
-            setLoading(false)
-            setAccepted(true)
-        }
-        acceptUser()
+    const handleAcceptUser = async () => {
+        setLoading(true)
+        const result = await acceptOrdinaryUser(selectUser.id)
+        dispatchUsers({type: "delete", payload: selectUser.id})
+       
+        let combinedId = user.phone + selectUser.phone
+
+        await setDoc(doc(db, "userChats", combinedId), {
+            combinedId,
+            userInfo:{
+                phone: selectUser.phone,
+                name: selectUser.first_name + " " + selectUser.last_name
+            },
+            date: serverTimestamp()
+        });
+    
+        setLoading(false)
+        setAccepted(true)
     }
 
     return (

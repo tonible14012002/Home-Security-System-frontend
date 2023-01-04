@@ -1,4 +1,5 @@
 import Admin from './pages/Admin';
+import Chat from './pages/Chat';
 import CommingSoon from './pages/CommingSoon';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -32,8 +33,12 @@ const publicRoutes = [
     auth:true
   },
   {
+    path: 'messages/:chatId',
+    component: Chat,
+  },
+  {
     path: 'messages',
-    component: CommingSoon,
+    component: Chat,
   },
   {
     path: 'settings',
@@ -47,6 +52,7 @@ const publicRoutes = [
     path: 'user-details/:id',
     component: UserDetails,
   }, 
+  
   
 ];
 
