@@ -68,7 +68,7 @@ const PeopleList = ({setSelectUser, refreshLastMessages}) => {
                     </div>
                     <div className='flex flex-col gap-1'>
                       <h1 className='text-2xl'>{chat.userInfo.name}</h1>
-                      <p className='text-lg text-mainPurple'>{chat.lastMessage.length > 30 ? chat.lastMessage.substring(0,30) + "..." : chat.lastMessage}</p>
+                      <p className='text-lg text-mainPurple'>{chat?.lastMessage?.length > 30 ? chat.lastMessage.substring(0,30) + "..." : chat?.lastMessage}</p>
                     </div>
                </div>
               ))}
