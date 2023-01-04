@@ -4,42 +4,15 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import userApi from '../../api/userApi';
 import ReactPaginate from 'react-paginate';
+import EButton from '../../components/EButton'
+import VisitList from './components/VisitList';
 
 const Admin = ({itemsPerPage=6}) => {
 
   const { user } = useContext(AuthContext)
   const [count, setCount] = useState(0)
   
-  const [pageCount, setPageCount] = useState(0)
-  const [itemOffset, setItemOffset] = useState(0)
-  const [currentItems, setCurrentItems] = useState(null) 
-  const [visits, setVisits] = useState([])
-  
   const fullName = (user.first_name + ' ' + user.last_name).trim()
-
-  const handlePageClick = (even) => {
-    const newOffset = even.selected * itemsPerPage % visits.length
-    setItemOffset(newOffset)
-  }
-
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage
-    setCurrentItems(visits.slice(itemOffset, endOffset))
-    setPageCount(Math.ceil(visits.length / itemsPerPage))
-  }, [visits, itemOffset, itemsPerPage])
-
-  useEffect(() => {
-    const getVisits = async () => {
-      try {
-        const { data: userVisits } = await userApi.getAllVisits()
-        setVisits(userVisits)
-      }
-      catch (e) {
-        console.log(e)
-      }
-    }
-    getVisits()
-  }, [])
 
   useEffect(() => {
     const countUser = async () => {
@@ -71,59 +44,10 @@ const Admin = ({itemsPerPage=6}) => {
             />
           </div>
         </div>
-        <div className="bg-mainCream text-black px-10 py-5 rounded-xl w-full mb-6">
-          <h3 className='text-2xl font-semibold mb-5'>Recent Activities</h3>
-          <div className='px-10 flex flex-col text-mainPurple min-h-[200px]'> 
-            {currentItems?.map((item, index) => {
-              const uFullName = (item.user.first_name + ' ' + item.user.last_name).trim()
-              console.log(item)
-              return (
-                <VisitItem 
-                  id={index}
-                  key={index}
-                  timestamp={item.time}
-                  fullName={uFullName || item.user.username}
-                  uid={item.user.id}
-                />
-              )
-            })}
-          </div>
-        </div>
-        <ReactPaginate 
-            nextLabel="next"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            marginPagesDisplayed={2}
-            pageCount={pageCount}
-            previousLabel="previous"
-            pageClassName="rounded-md"
-            pageLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-[40px] h-[40px] block flex justify-center items-center"
-            previousLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
-            nextLinkClassName="bg-[#ebd1bb] hover:bg-[#e2c7af] transition-all rounded-md w-fit pl-3 pr-3 h-[40px] block flex justify-center items-center"
-            breakLabel="..."
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            containerClassName="flex justify-between w-fit ml-auto gap-5 font-semibold"
-            activeClassName="outline outline-2"
-            renderOnZeroPageCount={null}
-          />
+        <VisitList />
       </div>
     </div>
   );
 };
 
 export default Admin;
-
-
-const VisitItem = ({id, timestamp, fullName, uid, ...props}) => {
-  const weekDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-  const time = new Date(timestamp)
-  return (
-    <div className="flex h-[30px] font-semibold">
-      <div className="mr-20 font-semibold">{id}</div>
-      <div className="w-full text-lg mr-24">{weekDay[time.getDay()]} {time.toLocaleString("en-US")}</div>
-      <div className="mr-20 text-lg font-semibold">{uid}</div>
-      <div className="w-full text-lg">{fullName}</div>
-    </div>
-  )
-}

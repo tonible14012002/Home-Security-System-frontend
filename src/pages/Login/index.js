@@ -44,7 +44,7 @@ const Login = () => {
 
   useEffect(() => {
     if(user.first_name) navigate("/")
-  }, [user])
+  }, [user, navigate])
 
   return (
     <form onSubmit={handleSubmit((data) => handleLoginSubmit(data))}>
