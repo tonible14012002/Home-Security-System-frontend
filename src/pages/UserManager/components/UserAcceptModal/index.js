@@ -10,17 +10,13 @@ import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { useAuthContext } from "../../../../context/AuthContext";
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 const UserAcceptModal = ({onClose: handleClose, selectUser, unConfirm, ...props}) => {
     const {user} = useAuthContext()
-=======
-const UserAcceptModal = ({onClose: handleClose, userId, ...props}) => {
-
->>>>>>> 4a4cce3b84c5d6d3d38a86c0b1dcfbef9b7382ca
     const [accepted, setAccepted] = useState(false)
     const [countDown, setCountDown] = useState(3)
     const {dispatchUsers} = useContext(UnConfirmOrdUserContext)
-    const { setRefetch } = useContext(OrdinaryUsersContext)
+    const { setRefetch: setRefetchOrdUser } = useContext(OrdinaryUsersContext)
 
     const [loading, setLoading] = useState(false)
 
@@ -36,10 +32,9 @@ const UserAcceptModal = ({onClose: handleClose, userId, ...props}) => {
         }
     }, [accepted, handleClose])
 
-<<<<<<< HEAD
     const handleAcceptUser = async () => {
         setLoading(true)
-        const result = await acceptOrdinaryUser(selectUser.id)
+        await acceptOrdinaryUser(selectUser.id)
         dispatchUsers({type: "delete", payload: selectUser.id})
        
         let combinedId = user.phone + selectUser.phone
@@ -52,21 +47,9 @@ const UserAcceptModal = ({onClose: handleClose, userId, ...props}) => {
             },
             date: serverTimestamp()
         });
-    
+        setRefetchOrdUser({})
         setLoading(false)
         setAccepted(true)
-=======
-    const handleAcceptUser = () => {
-        const acceptUser = async () => {
-            setLoading(true)
-            const result = await acceptOrdinaryUser(userId)
-            dispatchUsers({type: "delete", payload: userId})
-            setRefetch({})
-            setLoading(false)
-            setAccepted(true)
-        }
-        acceptUser()
->>>>>>> 4a4cce3b84c5d6d3d38a86c0b1dcfbef9b7382ca
     }
 
     return (

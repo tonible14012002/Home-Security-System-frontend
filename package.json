@@ -25,11 +25,8 @@
     "react-player": "^2.11.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
-<<<<<<< HEAD
     "uuid": "^9.0.0",
-=======
     "react-toastify": "^9.1.1",
->>>>>>> 4a4cce3b84c5d6d3d38a86c0b1dcfbef9b7382ca
     "web-vitals": "^2.1.4"
   },
   "scripts": {
