@@ -1,6 +1,6 @@
 import EButton from "../../../../components/EButton"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTrash, faEdit, faSquareCheck } from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faEdit, faSquareCheck, faUserCircle } from "@fortawesome/free-solid-svg-icons"
 
 const UserItem = ({
     id,
@@ -10,7 +10,9 @@ const UserItem = ({
     onDelete,
     onUpdate,
     onAccept,
+    onImage,
     showAccept,
+    image,
     ...props
 }) => {
 
@@ -28,6 +30,13 @@ const UserItem = ({
                         icon={faTrash}
                     />
                 </EButton>
+                {showAccept &&
+                <EButton className='ml-6'>
+                    <FontAwesomeIcon 
+                        icon={faUserCircle}
+                        onClick={onImage}
+                    />
+                </EButton>}
                 {!showAccept && (
                 <EButton className='ml-6'
                 onClick={onUpdate}

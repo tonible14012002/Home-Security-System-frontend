@@ -7,6 +7,7 @@ import UserItemSkeleton from "../UserItemSkeleton"
 import UserDeleteModal from "../UserDeleteModal"
 import UserUpdateModal from "../UserUpdateModal"
 import UserAcceptModal from "../UserAcceptModal"
+import UserImageModal from "../UserImageModal"
 
 
 const UserList = ({itemsPerPage=10, unConfirm}) => {
@@ -18,6 +19,7 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
     const [showDeleteModal, setShowDeleteModal] = useState({show: false, id: null})
     const [showUpdateModal, setShowUpdateModal] = useState({show: false, id: null})
     const [showAcceptModal, setShowAcceptModal] = useState({show: false, id: null})
+    const [showImageModal, setShowImageModal] = useState({show: false, id: null})
 
     const handleDelete = (id) => {
         setShowDeleteModal({show: true, id:id})
@@ -28,10 +30,15 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
     const handleAccept = (user) => {
         setShowAcceptModal({show: true, user:user})
     }
+    const handleImage = (user) => {
+        setShowImageModal({show: true, user:user})
+    }
     const handleCloseModal = () => {
         setShowDeleteModal({show: false, id: null})
         setShowUpdateModal({show: false, id:null})
         setShowAcceptModal({show: false, id: null})
+        setShowImageModal({show: false, id: null})
+        console.log("asdhsd")
     }
 
     const handlePageClick = (even) => {
@@ -44,8 +51,7 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
         setCurrentItems(users.slice(itemOffset, endOffset))
         setPageCount(Math.ceil(users.length / itemsPerPage))
     }, [itemOffset, itemsPerPage, users])
-
-    return (
+    return (    
         <div className='flex flex-col laptop:w-[1200px] m-auto mt-10'>
         <div className="flex justify-end gap-4 h-[45px] mb-2">
             <UserFilter ordinary />
@@ -68,10 +74,12 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
                         address={user.address}
                         phone={user.phone}
                         birth={user.birth}
+                        image={user.image}
                         className='flex bg-[#e2c7af] transition-all'
                         onDelete={() => handleDelete(user.id)}
                         onUpdate={() => handleUpdate(user.id)}
                         onAccept={() => handleAccept(user)}
+                        onImage={() => handleImage(user)}
                         showAccept={unConfirm}
                     />
                 )
@@ -114,6 +122,11 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
             onClose={handleCloseModal}
             selectUser={showAcceptModal.user}
             unConfirm={unConfirm}
+        />}
+        {showImageModal.show && 
+        <UserImageModal 
+            onClose={handleCloseModal}
+            selectUser={showImageModal.user}
         />}
     </div>
     )
