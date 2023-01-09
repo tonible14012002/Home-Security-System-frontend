@@ -28,7 +28,7 @@ const userApi = {
     axiosClient.patch(`/accounts/ordinary/${id}/`, rest),
   
   countUser: () => axiosClient.get('accounts/ordinary-count/'),
-  acceptOrdinaryUser: (id) => axiosClient.get(`accounts/ordinary/${id}/accept/`),
+  acceptOrdinaryUser: (id) => axiosClient.post(`accounts/ordinary/${id}/accept/`),
   
 
   //admin management
