@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit((data) => handleLoginSubmit(data))}>
-      <div className="flex flex-col gap-5 min-w-[470px]">
+      <div className="flex flex-col gap-5 min-w-[350px] max-w-[400px] w-[100%] tablet:min-w-[500px] mx-auto">
         <InputField
           register={register}
           field="Username"

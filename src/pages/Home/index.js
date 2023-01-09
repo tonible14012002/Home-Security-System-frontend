@@ -5,6 +5,7 @@ import userApi from "../../api/userApi";
 import Button from '../../components/Button';
 import InputField from '../../components/InputField';
 import { useAuthContext } from '../../context/AuthContext';
+import { toast } from "react-toastify";
 
 const Home = () => {
   const {user, setUser} = useAuthContext()
@@ -20,8 +21,9 @@ const Home = () => {
 
   const handleUpdateInfo = async (values) => {
     try {
-      const res = await userApi.updateUserById({id: user.id,...values })
+      const res = await userApi.updateOrdinaryUser({id: user.id,...values })
       if(res && res.data) setUser(res.data)
+      toast.success("Updated successfully!")
     } catch (error) {
       alert(JSON.stringify(error.data))
     }

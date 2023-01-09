@@ -152,7 +152,7 @@ const ChatPanel = ({selectUser,setRefreshLastMessage}) => {
 
           <form onSubmit={handleSendMessage}>
             <div className='flex'>
-                <div className='w-[94%]'>
+                <div className='w-[85%] tablet:w-[94%]'>
                   <input value={text} onChange={(e) => setText(e.target.value)} className='outline-none w-[100%] h-[60px] p-2 text-xl bg-mainBrown placeholder:text-mainPurple' placeholder='Type something' />
                 </div>
                 <button onClick={handleSendMessage} type="submit" className='flex items-center justify-center withHover bg-mainPurple flex-1'>

@@ -8,7 +8,7 @@ const UserImageModal = ({selectUser, onClose:handleClose }) => {
     return (
         <Modal className="flex justify-center items-center" >
             
-            <div className="relative w-[700px] bg-mainCream/80 h-[700px]  rounded-xl">
+            <div className="relative w-[700px] bg-mainCream/80 h-[700px] rounded-xl">
                 <div className="absolute right-2 top-1 withHover">
                     <EButton
                     onClick={handleClose}

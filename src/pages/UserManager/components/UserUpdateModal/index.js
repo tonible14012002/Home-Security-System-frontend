@@ -7,6 +7,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext"
 import userApi from "../../../../api/userApi"
 import { useForm } from "react-hook-form"
+import { toast } from "react-toastify"
 
 const UserUpdateModal = ({onClose:handleClose, userId}) => {
     const {loading, setLoading, setRefetch} = useContext(OrdinaryUsersContext)
@@ -26,9 +27,10 @@ const UserUpdateModal = ({onClose:handleClose, userId}) => {
     const handleUpdateUserSubmit = async (values) => {
         try {
             setLoading(true)
-            await userApi.updateUserById({id: user.id,...values })
+            await userApi.updateOrdinaryUser({id: user.id,...values })
             handleClose()
             setRefetch({})
+            toast.success("Updated successfully!")
           } catch (error) {
             console.log(error)
           }
