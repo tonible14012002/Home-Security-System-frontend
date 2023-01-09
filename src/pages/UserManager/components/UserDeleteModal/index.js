@@ -5,7 +5,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext";
-import { deleteOrdinaryUser } from "../../../../services/userServices";
+import userApi from "../../../../api/userApi";
 
 const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => {
 
@@ -28,7 +28,10 @@ const UserDeleteModal = ({onClose:handleClose, userId, unConfirm, ...props}) => 
     const handleDeleteUser = () => {
         const deleteUser = async () => {
             setLoading(true)
-            const result = await deleteOrdinaryUser(userId)
+            try {
+                await userApi.deleteOrdinaryUser(userId)
+            }
+            catch (e) { console.log(e) }
             dispatchUsers({type: "delete", payload: userId})
             setLoading(false)
             setDeleted(true)

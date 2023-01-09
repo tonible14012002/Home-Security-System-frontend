@@ -40,7 +40,7 @@ const Admin = ({itemsPerPage=6}) => {
             <img
               className=' object-cover h-full w-full'
               alt='Camera'
-              src='http://127.0.0.1:5000/video_feed'
+              src='http://10.130.38.75:5000/video_feed'
             />
           </div>
         </div>

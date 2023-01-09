@@ -5,12 +5,11 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { OrdinaryUsersContext, UnConfirmOrdUserContext } from "../../../../context/OrdinaryUserContext";
-import { acceptOrdinaryUser } from "../../../../services/userServices";
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import userApi from "../../../../api/userApi";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { useAuthContext } from "../../../../context/AuthContext";
 
-// <<<<<<< HEAD
 const UserAcceptModal = ({onClose: handleClose, selectUser, unConfirm, ...props}) => {
     const {user} = useAuthContext()
     const [accepted, setAccepted] = useState(false)
@@ -19,7 +18,6 @@ const UserAcceptModal = ({onClose: handleClose, selectUser, unConfirm, ...props}
     const { setRefetch: setRefetchOrdUser } = useContext(OrdinaryUsersContext)
 
     const [loading, setLoading] = useState(false)
-
 
     useEffect(() => {
         if (accepted){
@@ -34,7 +32,10 @@ const UserAcceptModal = ({onClose: handleClose, selectUser, unConfirm, ...props}
 
     const handleAcceptUser = async () => {
         setLoading(true)
-        await acceptOrdinaryUser(selectUser.id)
+        try {
+            await userApi.acceptOrdinaryUser(selectUser.id)
+        }
+        catch (e) { console.log(e) }
         dispatchUsers({type: "delete", payload: selectUser.id})
        
         let combinedId = user.phone + selectUser.phone

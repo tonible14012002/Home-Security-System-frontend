@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const baseSocketURL = "ws://127.0.0.1:8000/";
-const baseURL = "http://127.0.0.1:8000/";
+const baseSocketURL = "ws://192.168.204.1:8000/";
+const baseURL = "http://192.168.204.1:8000";
 const axiosClient = axios.create({
   baseURL,
 });

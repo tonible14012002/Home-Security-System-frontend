@@ -64,11 +64,11 @@ const UserList = ({itemsPerPage=10, unConfirm}) => {
                 <div className=' bg-[#D9D9D9] text-xl text-[#316B83] h-[60px] font-semibold leading-[60px] pl-5'>Phone No</div>
                 <div className=' bg-[#D9D9D9] text-xl text-[#316B83] h-[60px] font-semibold leading-[60px] text-center'>Actions</div>
             </div>
-            {loading? Array(10).fill(null).map((item, index) => <UserItemSkeleton />) 
+            {loading? Array(10).fill(null).map((item, index) => <UserItemSkeleton key={index} />) 
             :currentItems?.map((user, index) => {
                 return (
                     <UserItem 
-                        key={index}
+                        key={user.id}
                         id={user.id}
                         fullName={user.first_name + ' ' + user.last_name}
                         address={user.address}

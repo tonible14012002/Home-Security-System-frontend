@@ -84,6 +84,7 @@ const VisitList = ({itemsPerPage=6}) => {
                   phone={item.user.phone}
                   uid={item.user.id}
                   isRecent={item.isRecent || false}
+                  newest={item.isRecent && index === 0}
                 />
               )
             })}

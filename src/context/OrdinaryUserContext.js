@@ -1,7 +1,7 @@
 import { faArrowsToDot } from "@fortawesome/free-solid-svg-icons";
 import { createContext, useEffect, useState } from "react"
 import { useReducer } from "react"
-import { getOrdinaryUsers } from '../services/userServices';
+import userApi from "../api/userApi";
 
 const OrdinaryUsersContext = createContext([])
 const UnConfirmOrdUserContext = createContext([])
@@ -44,8 +44,15 @@ const OrdinaryUserProvider = ({children, ...props}) => {
     useEffect(() => {
         const getUsers = async () => {
             setLoading(true)
-            const results = await getOrdinaryUsers({status: 'accepted'})
-            dispatchUsers({type: "list", payload: results})
+            let data = undefined
+            try {
+                const results = await userApi.getOrdinaryUsers({status: 'accepted'})
+                data = results.data
+            }
+            catch(e) { console.log(e) }
+
+
+            dispatchUsers({type: "list", payload: data})
             setLoading(false)
         }
         getUsers()
@@ -68,8 +75,15 @@ const UnConfirmOrdUserProvider = ({children, ...props}) => {
     useEffect(() => {
         const getUsers = async () => {
             setLoading(true)
-            const results = await getOrdinaryUsers({status: 'unconfirm'})
-            dispatchUsers({type: "list", payload: results})
+            let data = undefined
+            try {
+                const results = await userApi.getOrdinaryUsers({status: 'unconfirm'})
+                data = results.data
+            }
+            catch(e) { console.log(e) }
+
+
+            dispatchUsers({type: "list", payload: data})
             setLoading(false)
         }
         getUsers()

@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useContext } from "react"
 import { OrdinaryUsersContext } from "../../../../context/OrdinaryUserContext"
-import { getOrdinaryUsers } from "../../../../services/userServices"
+import userApi from "../../../../api/userApi"
 
 const UserFilter  = ({show, ...props}) => {
 
@@ -36,7 +36,12 @@ const FilterMenu = ({hidden, ...props}) => {
     const onSubmit = async (data) => {
         console.log(data)
         setLoading(true)
-        const newData = await getOrdinaryUsers(data)
+        let newData = undefined
+        try {
+            const result = await userApi.getOrdinaryUsers(data)
+            newData = result.data
+        }
+        catch (e) { console.log(e)}
         dispatchUsers({type: 'list', payload: newData})
         setLoading(false)
     }

@@ -9,13 +9,27 @@ const userApi = {
   }),
 
   //user management
-  getAllUsers: () => axiosClient.get('accounts/ordinary/'),
+  getOrdinaryUsers: (q={}) => { 
+    var params = new URLSearchParams()
+    for (let key in q) {
+        if (Array.isArray(q[key])){
+            q[key].forEach(value => params.append(key, value))
+        }
+        else {
+            params.append(key, q[key])
+        }
+    }
+
+    return axiosClient.get('accounts/ordinary/', {params: params})
+  },
   getUserById: (id) => axiosClient.get(`accounts/ordinary/${id}/`),
-  deleteUserById: (id) => axiosClient.delete(`accounts/ordinary/${id}/`),
-  updateUserById: ({ id, ...rest }) =>
+  deleteOrdinaryUser: (id) => axiosClient.delete(`accounts/ordinary/${id}/`),
+  updateOrdinaryUser: ({ id, ...rest }) =>
     axiosClient.patch(`/accounts/ordinary/${id}/`, rest),
   
   countUser: () => axiosClient.get('accounts/ordinary-count/'),
+  acceptOrdinaryUser: (id) => axiosClient.get(`accounts/ordinary/${id}/accept/`),
+  
 
   //admin management
   getAllAdmins: () => axiosClient.get('accounts/admin/'),
